@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "tow-mm-streamlit"
+version = "0.1.0"
+description = ""
+authors = ["user.name <user.email>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.48.1"
+python-dotenv = "^1.1.1"
+psycopg2-binary = "^2.9.10"
+streamlit-calendar = "^1.4.0"
+#streamlit-cookies-manager = "^0.2.0"
+extra-streamlit-components = "^0.1.80"
+colorlog = "^6.9.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
