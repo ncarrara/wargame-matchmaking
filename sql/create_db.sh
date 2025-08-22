@@ -1,1 +1,0 @@
-sudo -u postgres psql postgres -d warhammer -f matchmaking_schema.sql
