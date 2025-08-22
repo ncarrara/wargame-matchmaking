@@ -2,6 +2,7 @@ from typing import List
 
 import streamlit as st
 
+from tow_mm.navigation_utils import nav_to_match_lobby
 from tow_mm.widgets.add_match_widget import add_match_widget
 from tow_mm.widgets.calendar_widget import display_calendar_widget
 from tow_mm.widgets.matches_widget import display_matches_widget
@@ -17,13 +18,7 @@ def display_main_lobby_page(players: List[Player], venues: List[Venue]):
     match_id = add_match_widget(current_player=get_curr_player(), venues=venues)
 
     if match_id:
-        match_url = f"{st.session_state.config.app_url}?match_id={match_id}"
-        st.markdown(
-            f"""
-                <meta http-equiv="refresh" content="0; url={match_url}">
-                """,
-            unsafe_allow_html=True
-        )
+        nav_to_match_lobby(match_id=match_id)
 
     display_matches_widget(venues=venues, players=players, match_filter=lambda m: not m.is_closed())
 
