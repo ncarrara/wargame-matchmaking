@@ -52,7 +52,7 @@ def display_match_lobby_page(
                 st.markdown(f"**Venue**\n`{venues_dict[match.venue_id].name}`")
         with c2:
             with st.container(border=True):
-                st.markdown(f"**Type**\n{'Ranked' if match.ranked else 'Not Ranked'}")
+                st.markdown(f"**Type**\n{'`Ranked`' if match.ranked else '`Not Ranked`'}")
         with c3:
             with st.container(border=True):
                 st.markdown(f"**Date**\n`{match.created_at}`")
