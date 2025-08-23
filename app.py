@@ -43,10 +43,12 @@ st.session_state.player = player
 factions = get_factions()
 venues = get_venues()
 players = get_players()
-if player is not None:
-    players.append(player)
 
 players_by_id = {p.id: p for p in players}
+
+if player is not None and player.id not in players_by_id:
+    players_by_id[player.id] = player
+    players.append(player)
 
 if st.query_params and "match_id" in st.query_params:
     display_match_lobby_page(
