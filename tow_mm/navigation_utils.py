@@ -11,11 +11,13 @@ def nav_to_match_lobby(match_id: int):
     st.rerun()
 
 def nav_to_player_id_page(player_id: int):
+    st.query_params.clear()
     st.query_params["player_id"] = player_id
     st.rerun()
 
 
 def nav_to_ranking_page(top: int):
+    st.query_params.clear()
     st.query_params["ranking"] = top
     st.rerun()
 
