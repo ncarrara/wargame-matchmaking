@@ -5,7 +5,7 @@ import streamlit as st
 from streamlit_js_eval import streamlit_js_eval
 
 from tow_mm.db_utils import Player, insert_or_get_player
-from tow_mm.navigation_utils import nav_to_main_lobby_button, nav_to_player_id_page
+from tow_mm.navigation_utils import nav_to_main_lobby_button, nav_to_player_id_page, nav_to_ranking_page
 
 
 def display_header()-> Optional[Player]:

@@ -14,6 +14,12 @@ def nav_to_player_id_page(player_id: int):
     st.query_params["player_id"] = player_id
     st.rerun()
 
+
+def nav_to_ranking_page(top: int):
+    st.query_params["ranking"] = top
+    st.rerun()
+
+
 def nav_to_main_lobby_button():
     if st.button("Main lobby"):
         st.query_params.clear()

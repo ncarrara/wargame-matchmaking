@@ -3,15 +3,15 @@ import pandas as pd
 import streamlit as st
 
 from tow_mm.data_model import Player
+from tow_mm.navigation_utils import nav_to_ranking_page
 from tow_mm.utils import is_connected
 
 
 def display_rank_widget(players: List[Player], current_player: Player, top: int = 25):
     assert top>=1
-    # Show players from PostgreSQL
-    st.subheader(f"Top {top} players")
-
     players = sorted(players, key=lambda p: (p.mmr, p.name, p.id))[::-1]
+
+    st.subheader(f"Top {top} players ({len(players)} total)")
 
     players_rank_by_id = {p.id: i + 1 for i, p in enumerate(players)}
 
@@ -33,3 +33,7 @@ def display_rank_widget(players: List[Player], current_player: Player, top: int 
         ]
     )
     st.dataframe(df)
+
+
+    if st.button("Full Ranking", key=f"nav_to_ranking_button"):
+        nav_to_ranking_page(top=len(players))

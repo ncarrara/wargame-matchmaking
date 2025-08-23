@@ -11,7 +11,9 @@ from tow_mm.db_utils import get_players, get_factions, get_venues
 from tow_mm.pages.main_lobby import display_main_lobby_page
 from tow_mm.pages.match_lobby import display_match_lobby_page
 from tow_mm.pages.profile_page import display_profile_page
+from tow_mm.pages.ranking_page import display_ranking_page
 from tow_mm.widgets.head_widget import display_header
+from tow_mm.widgets.rank_component import display_rank_widget
 
 load_dotenv()
 
@@ -59,6 +61,8 @@ if st.query_params and "match_id" in st.query_params:
     )
 elif st.query_params and "player_id" in st.query_params:
     display_profile_page(player=players_by_id[int(st.query_params.player_id)], players=players)
+elif st.query_params and "ranking" in st.query_params:
+    display_ranking_page(current_player=player, players=players, top=int(st.query_params["ranking"]))
 else:
     display_main_lobby_page(players=players, venues=venues)
 
