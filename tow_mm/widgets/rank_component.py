@@ -25,7 +25,7 @@ def display_rank_widget(players: List[Player], current_player: Player, top: int 
         [
             {
                 "MMR": p.mmr,
-                "Name": p.name + (" 🏆" if (is_connected() and p.id == current_player.id) else ""),
+                "Name": p.get_public_name() + (" 🏆" if (is_connected() and p.id == current_player.id) else ""),
                 "Matches": p.games_number,
 
             }

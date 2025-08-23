@@ -20,7 +20,13 @@ class Player:
     email: str
     mmr: int
     id: Optional[int]
+    pseudo: Optional[str]
     games_number: Optional[int]
+
+    def get_public_name(self)-> str:
+        pseudo_str = "" if not self.pseudo else f" - {self.pseudo}"
+
+        return f"{self.name}{pseudo_str}"
 
 @dataclass
 class Match:

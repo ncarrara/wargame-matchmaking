@@ -31,8 +31,8 @@ def display_matches_widget(venues: List[Venue], players: List[Player], match_fil
         p0 = participations[0] if len(participations) > 0 else None
         p1 = participations[1] if len(participations) > 1 else None
 
-        p0_str = "?" if p0 is None else players_by_id[p0.player_id].name
-        p1_str = "?" if p1 is None else players_by_id[p1.player_id].name
+        p0_str = "?" if p0 is None else players_by_id[p0.player_id].get_public_name()
+        p1_str = "?" if p1 is None else players_by_id[p1.player_id].get_public_name()
 
         venue_name = venues_by_id[match.venue_id].name
 

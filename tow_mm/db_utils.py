@@ -54,21 +54,21 @@ def get_players(player_ids: Optional[List[int]] = None) -> List[Player]:
     cur = build_cursor()
     if player_ids:
         query = """
-                SELECT name, email, mmr, id, games_number
+                SELECT name, email, mmr, id, games_number, pseudo
                 FROM players
                 WHERE id in %s
             """
         cur.execute(query, (tuple(player_ids),))
     else:
         query = """
-                SELECT name, email, mmr, id, games_number
+                SELECT name, email, mmr, id, games_number, pseudo
                 FROM players
             """
         cur.execute(query)
 
     rows = cur.fetchall()
     cur.close()
-    return [Player(name=row[0], email=row[1], mmr=row[2], id=row[3], games_number=row[4]) for row in rows]
+    return [Player(name=row[0], email=row[1], mmr=row[2], id=row[3], games_number=row[4], pseudo=row[5]) for row in rows]
 
 
 def get_messages(match_id: int, player_id: int, destination_player_id: int) -> List[ChatMessage]:
@@ -187,25 +187,26 @@ def insert_or_get_player(player: Player) -> Player:
         name,
         email,
         mmr,
-        games_number
+        games_number,
+        pseudo
     )
     VALUES (
-        %s, %s, %s, %s
+        %s, %s, %s, %s, %s
     )
     ON CONFLICT (email)
     DO UPDATE SET name = players.name
-    RETURNING  name, email, mmr, id, games_number
+    RETURNING  name, email, mmr, id, games_number, pseudo
     """
 
     params = (
-        player.name, player.email, player.mmr, player.games_number
+        player.name, player.email, player.mmr, player.games_number, player.pseudo
     )
 
     cur.execute(tx, params)
     row = cur.fetchone()
     conn.commit()
     cur.close()
-    return Player(name=row[0], email=row[1], mmr=row[2], id=row[3], games_number=row[4])
+    return Player(name=row[0], email=row[1], mmr=row[2], id=row[3], games_number=row[4], pseudo=row[5])
 
 
 def delete_match(match_id):
@@ -241,6 +242,14 @@ def get_match(match_id: int) -> Match:
         return matches[0]
     else:
         return None
+
+def change_pseudo(player_id: int, pseudo: str):
+    cur = build_cursor()
+
+    cur.execute(
+        query="UPDATE players SET pseudo = %s WHERE id = %s",
+        vars=(pseudo, player_id)
+    )
 
 def get_matches(match_ids: Optional[List[int]] = None) -> List[Match]:
     cur = build_cursor()

@@ -17,7 +17,6 @@ psycopg2-binary = "^2.9.10"
 streamlit-calendar = "^1.4.0"
 colorlog = "^6.9.0"
 streamlit-autorefresh = "^1.0.1"
-#streamlit-aggrid = "^1.1.7"
 streamlit-js-eval = "^0.1.7"
 streamlit-javascript = "^0.1.5"
 
