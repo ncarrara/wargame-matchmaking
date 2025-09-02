@@ -40,7 +40,11 @@ simulation = st.query_params and "page" in st.query_params and st.query_params["
 autorefresh= not simulation
 
 if autorefresh:
-    st_autorefresh(interval=3000)
+    interval = 3000
+else:
+    interval =  500_000
+
+st_autorefresh(interval=interval)
 
 st.set_page_config(page_title="WMM", page_icon="static/logos/transparent_green.png")
 
