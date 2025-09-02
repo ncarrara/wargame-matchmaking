@@ -62,7 +62,7 @@ def unit_attack(attacker: Unit, defender: Unit):
     total_attack = attacker.single_unit.attacks * attacker.fighters
 
     hit_proba = TO_HIT_CHART[attacker.single_unit.weapon_skill][defender.single_unit.weapon_skill]
-    wound_proba = TO_WOUND_CHART[attacker.single_unit.weapon_skill][defender.single_unit.weapon_skill]
+    wound_proba = TO_WOUND_CHART[attacker.single_unit.strength][defender.single_unit.toughness]
 
     hits = sum([x >= hit_proba for x in roll_d6(total_attack)])
     wounds = sum([x >= wound_proba for x in roll_d6(hits)])
