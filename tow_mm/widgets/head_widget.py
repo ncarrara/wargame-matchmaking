@@ -6,7 +6,7 @@ from streamlit_js_eval import streamlit_js_eval
 
 from tow_mm.db_utils import Player, insert_or_get_player
 from tow_mm.navigation_utils import nav_to_main_lobby_button, nav_to_player_id_page, nav_to_ranking_page, \
-    nav_to_contact_page
+    nav_to_contact_page, nav_to_simulator_page
 
 
 def display_header()-> Optional[Player]:
@@ -48,5 +48,8 @@ def display_header()-> Optional[Player]:
 
             if st.button("Contact", key=f"nav_to_contact_button", width=100):
                 nav_to_contact_page()
+
+            if st.button("Simulator", key=f"nav_to_simulator_button", width=100):
+                nav_to_simulator_page()
 
     return player

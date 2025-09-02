@@ -1,6 +1,5 @@
 import base64
 from datetime import datetime
-from imghdr import test_xbm
 from typing import List, Optional
 
 from tow_mm.data_model import Player, ContactMessage

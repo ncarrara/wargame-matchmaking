@@ -13,6 +13,7 @@ from tow_mm.pages.main_lobby import display_main_lobby_page
 from tow_mm.pages.match_lobby import display_match_lobby_page
 from tow_mm.pages.profile_page import display_profile_page
 from tow_mm.pages.ranking_page import display_ranking_page
+from tow_mm.pages.simulator_page import display_simulator_page
 from tow_mm.widgets.head_widget import display_header
 
 load_dotenv()
@@ -34,7 +35,12 @@ st.markdown("""
 
 st.session_state.config = Config(app_url=os.getenv("APP_URL", None))
 
-count = st_autorefresh(interval=3000)
+simulation = st.query_params and "page" in st.query_params and st.query_params["page"] == "simulator"
+
+autorefresh= not simulation
+
+if autorefresh:
+    st_autorefresh(interval=3000)
 
 st.set_page_config(page_title="WMM", page_icon="static/logos/transparent_green.png")
 
@@ -65,6 +71,8 @@ elif st.query_params and "ranking" in st.query_params:
     display_ranking_page(current_player=player, players=players, top=int(st.query_params["ranking"]))
 elif st.query_params and "page" in st.query_params and st.query_params["page"] == "contact":
     display_contact_page(player=player)
+elif simulation:
+    display_simulator_page()
 else:
     display_main_lobby_page(players=players, venues=venues)
 

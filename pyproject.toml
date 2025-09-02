@@ -11,7 +11,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.12"
-streamlit = {extras = ["auth"], version = "^1.48.1"}
+streamlit = {extras = ["charts"], version = "^1.49.1"}
 python-dotenv = "^1.1.1"
 psycopg2-binary = "^2.9.10"
 streamlit-calendar = "^1.4.0"
@@ -19,6 +19,8 @@ colorlog = "^6.9.0"
 streamlit-autorefresh = "^1.0.1"
 streamlit-js-eval = "^0.1.7"
 streamlit-javascript = "^0.1.5"
+plotly = "^6.3.0"
+scipy = "^1.16.1"
 
 
 [build-system]

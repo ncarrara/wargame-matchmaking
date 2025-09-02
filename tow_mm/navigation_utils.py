@@ -23,6 +23,8 @@ def nav_to_page(page: str):
 def nav_to_contact_page():
     nav_to_page("contact")
 
+def nav_to_simulator_page():
+    nav_to_page("simulator")
 
 def nav_to_ranking_page(top: int):
     st.query_params.clear()
