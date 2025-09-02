@@ -21,6 +21,7 @@ streamlit-js-eval = "^0.1.7"
 streamlit-javascript = "^0.1.5"
 plotly = "^6.3.0"
 scipy = "^1.16.1"
+authlib = "^1.6.3"
 
 
 [build-system]
