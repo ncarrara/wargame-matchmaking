@@ -55,14 +55,14 @@ class Unit:
 
 
 def roll_d6(size: int):
-    return np.random.randint(low=1, high=6, size=size)
+    return np.random.randint(low=1, high=7, size=size)
 
 
 def unit_attack(attacker: Unit, defender: Unit):
     total_attack = attacker.single_unit.attacks * attacker.fighters
 
-    hit_th = TO_HIT_CHART[attacker.single_unit.weapon_skill][defender.single_unit.weapon_skill]
-    wound_th = TO_WOUND_CHART[attacker.single_unit.strength][defender.single_unit.toughness]
+    hit_th = TO_HIT_CHART[attacker.single_unit.weapon_skill-1][defender.single_unit.weapon_skill-1]
+    wound_th = TO_WOUND_CHART[attacker.single_unit.strength-1][defender.single_unit.toughness-1]
 
     hits = sum([x >= hit_th for x in roll_d6(total_attack)])
     wounds = sum([x >= wound_th for x in roll_d6(hits)])
