@@ -1,1 +1,5 @@
 .env
+/.streamlit/secrets.toml
+/.streamlit/secrets_prod.toml
+/.env_prod
+./prod/connect_to_remote_db

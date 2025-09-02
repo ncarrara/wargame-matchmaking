@@ -1,0 +1,11 @@
+[ui]
+hideTopBar = true
+[theme]
+base = "light"
+
+## Anthropic-inspired palette
+#primaryColor = "#8A63D2"            # Soft purple accent
+#backgroundColor = "#FFFFFF"         # Clean white background
+#secondaryBackgroundColor = "#F5F5F7" # Light gray panels
+#textColor = "#1C1C1C"               # Near-black for readability
+#font = "sans serif"
