@@ -87,7 +87,11 @@ def display_simulator_page():
         fig = px.histogram(
             pd.DataFrame(data={"unit 0": all_w0, "unit 1": all_w1}),
             marginal="box",
-            barmode="overlay"
+            barmode="overlay",
+            color_discrete_map={
+                "unit 0": "red",
+                "unit 1": "blue"
+            }
 
         )
         st.plotly_chart(fig)
