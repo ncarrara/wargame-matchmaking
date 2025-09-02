@@ -61,11 +61,11 @@ def roll_d6(size: int):
 def unit_attack(attacker: Unit, defender: Unit):
     total_attack = attacker.single_unit.attacks * attacker.fighters
 
-    hit_proba = TO_HIT_CHART[attacker.single_unit.weapon_skill][defender.single_unit.weapon_skill]
-    wound_proba = TO_WOUND_CHART[attacker.single_unit.strength][defender.single_unit.toughness]
+    hit_th = TO_HIT_CHART[attacker.single_unit.weapon_skill][defender.single_unit.weapon_skill]
+    wound_th = TO_WOUND_CHART[attacker.single_unit.strength][defender.single_unit.toughness]
 
-    hits = sum([x >= hit_proba for x in roll_d6(total_attack)])
-    wounds = sum([x >= wound_proba for x in roll_d6(hits)])
+    hits = sum([x >= hit_th for x in roll_d6(total_attack)])
+    wounds = sum([x >= wound_th for x in roll_d6(hits)])
 
     wound_after_amor = wounds - sum([x >= defender.single_unit.armor for x in roll_d6(wounds)])
     wound_after_ward = wound_after_amor - sum([x >= defender.single_unit.ward for x in roll_d6(wound_after_amor)])
