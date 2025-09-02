@@ -67,8 +67,19 @@ def unit_attack(attacker: Unit, defender: Unit):
     hits = sum([x >= hit_th for x in roll_d6(total_attack)])
     wounds = sum([x >= wound_th for x in roll_d6(hits)])
 
+    if wounds ==0:
+        return 0
+
     wound_after_amor = wounds - sum([x >= defender.single_unit.armor for x in roll_d6(wounds)])
+
+    if wound_after_amor == 0:
+        return 0
+
     wound_after_ward = wound_after_amor - sum([x >= defender.single_unit.ward for x in roll_d6(wound_after_amor)])
+
+    if wound_after_ward == 0:
+        return  0
+
     wound_after_regen = wound_after_ward - sum([x >= defender.single_unit.regen for x in roll_d6(wound_after_ward)])
 
     return wound_after_regen
