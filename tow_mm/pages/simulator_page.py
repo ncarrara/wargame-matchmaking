@@ -39,7 +39,7 @@ def display_simulator_page():
         with cols[8]:
             regen_save = st.number_input(label="Regen", key=f"RegenSave{i}", value=7, min_value=2, max_value=7, step=1)
 
-        fighters = st.number_input(label="Fighters", key=f"Fighters{i}", value=10, min_value=1, step=1)
+        fighters = st.number_input(label="Fighters", key=f"Fighters{i}", value=10 if i==0 else 25, min_value=1, step=1)
 
         unit = Unit(
             single_unit=SingleUnit(
