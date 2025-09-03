@@ -80,7 +80,7 @@ def display_simulator_page():
         with cols[4]:
             attacks = st.number_input(label="A", key=f"Attacks{i}", value=unit_0.attacks, min_value=1, max_value=10, step=1)
         with cols[5]:
-            wounds = st.number_input(label="W", key=f"Wounds{i}", value=unit_0.wounds, min_value=0, max_value=10, step=1)
+            wounds = st.number_input(label="W", key=f"Wounds{i}", value=unit_0.wounds, min_value=1, max_value=1, step=1)
         with cols[6]:
             armor_save = st.number_input(label="Armor", key=f"ArmorSave{i}", value=7, min_value=2, max_value=7, step=1)
         with cols[7]:
