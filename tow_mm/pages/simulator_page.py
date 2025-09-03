@@ -18,36 +18,41 @@ def read_json() -> List[SingleUnit]:
         data = json.load(f)
         parse = lambda x: 0 if x == "-" else int(x)
         for unit in data.values():
-            if len(unit["stats"]) > 1 or "troopType" not in unit or unit["troopType"] == "MCr":
+            if "troopType" not in unit or unit["troopType"] == "MCr":
                 continue
 
-            unit = unit["stats"][0]
+            for unit in unit["stats"]:
 
-            if "+" in unit["S"] or "+" in unit["T"] or "+" in unit["W"] or "D6" in unit["A"] or "*" in unit["A"] or "2D3" in unit["A"] or "D3" in unit["A"]:
-                continue
+                if "+" in unit["S"] or "+" in unit["T"] or "+" in unit["W"] or "D6" in unit["A"] or "*" in unit["A"] or "2D3" in unit["A"] or "D3" in unit["A"]:
+                    continue
 
-            unit = SingleUnit(
-                base_width=0,
-                base_height=0,
-                leadership=parse(unit["Ld"]),
-                attacks=parse(unit["A"]),
-                weapon_skill=parse(unit["WS"]),
-                strength=parse(unit["S"]),
-                wounds=parse(unit["W"]),
-                name=unit["Name"],
-                ballistic_skill=parse(unit["BS"]),
-                toughness=parse(unit["T"]),
-                # regen=unit[""],
-                # armor=unit[""],
-                # ward=unit[""],
-                initiative=parse(unit["I"]),
-            )
+                if parse(unit["W"]) != 1:
+                    continue
 
-            units.append(unit)
+                unit = SingleUnit(
+                    base_width=0,
+                    base_height=0,
+                    leadership=parse(unit["Ld"]),
+                    attacks=parse(unit["A"]),
+                    weapon_skill=parse(unit["WS"]),
+                    strength=parse(unit["S"]),
+                    wounds=parse(unit["W"]),
+                    name=unit["Name"],
+                    ballistic_skill=parse(unit["BS"]),
+                    toughness=parse(unit["T"]),
+                    # regen=unit[""],
+                    # armor=unit[""],
+                    # ward=unit[""],
+                    initiative=parse(unit["I"]),
+                )
+                # print(unit)
+                units.append(unit)
     return units
 
 
 ALL_UNITS = {u.name: u for u in read_json()}
+
+
 
 
 def display_simulator_page():
@@ -58,7 +63,9 @@ def display_simulator_page():
     for i in [0, 1]:
         draw_line()
 
-        unit_0 = ALL_UNITS[st.selectbox(label=f"Unit {i}",options= tuple(sorted([u for u in ALL_UNITS.keys()])))]
+        u_str = st.selectbox(label=f"Unit {i}",options= tuple(sorted([u for u in ALL_UNITS.keys()])))
+        # u_str = "Necrosphinx" if i == 0 else "Duke"
+        unit_0 = ALL_UNITS[u_str]
         cols = st.columns(9)
 
         with cols[0]:
@@ -127,6 +134,10 @@ def display_simulator_page():
 
         name0 = units[0].single_unit.name
         name1 = units[1].single_unit.name
+
+        if name0 == name1:
+            name0 = "unit 0:" + name0
+            name1 = "unit 1" + name1
 
         st.markdown(f"Average wounds:  on {name0}:  `{np.mean(all_w0)}` on {name1}:  `{np.mean(all_w1)}`")
 

@@ -59,18 +59,22 @@ class Unit:
 
 
 def roll_d6(size: int):
-    return np.random.randint(low=1, high=7, size=size)
-
+    res =  np.random.randint(low=1, high=7, size=size)
+    # print(res)
+    return res
 
 def unit_attack(attacker: Unit, defender: Unit):
+    # print(attacker.single_unit.name)
     total_attack = attacker.single_unit.attacks * attacker.fighters
 
     hit_th = TO_HIT_CHART[attacker.single_unit.weapon_skill - 1][defender.single_unit.weapon_skill - 1]
     wound_th = TO_WOUND_CHART[attacker.single_unit.strength - 1][defender.single_unit.toughness - 1]
-
+    # print(f"to hit: {hit_th}+")
+    # print(f"to wound: {wound_th}+")
     hits = sum([x >= hit_th for x in roll_d6(total_attack)])
     wounds = sum([x >= wound_th for x in roll_d6(hits)])
-
+    # print(f"wound on {defender.single_unit.name} => {wounds}")
+    # return wounds
     if wounds == 0:
         return 0
 
@@ -88,6 +92,7 @@ def unit_attack(attacker: Unit, defender: Unit):
 
     return wound_after_regen
 
+# TODO fix bug here for multiples wounds units
 
 def close_combat_round(u0: Unit, u1: Unit):
     if u0.single_unit.initiative == u1.single_unit.initiative:
@@ -105,54 +110,55 @@ def close_combat_round(u0: Unit, u1: Unit):
 
 if __name__ == "__main__":
 
-    print(read_json())
 
-    # u0 = Unit(
-    #     single_unit=SingleUnit(
-    #         name="u0",
-    #         attacks=2,
-    #         wounds=1,
-    #         toughness=4,
-    #         strength=3,
-    #         base_width=0,
-    #         initiative=4,
-    #         leadership=0,
-    #         base_height=0,
-    #         ward=7,
-    #         armor=5,
-    #         weapon_skill=3,
-    #         ballistic_skill=3,
-    #         regen=7,
-    #     ),
-    #     fighters=10
-    # )
-    #
-    # u1 = Unit(
-    #     single_unit=SingleUnit(
-    #         name="u1",
-    #         attacks=2,
-    #         wounds=1,
-    #         toughness=4,
-    #         strength=3,
-    #         base_width=0,
-    #         initiative=5,
-    #         leadership=0,
-    #         base_height=0,
-    #         ward=7,
-    #         armor=5,
-    #         weapon_skill=3,
-    #         ballistic_skill=3,
-    #         regen=7,
-    #     ),
-    #     fighters=10
-    # )
-    #
-    # all_w0 = 0
-    # all_w1 = 0
-    #
-    # for _ in range(1000):
-    #     w0, w1 = close_combat_round(u0, u1)
-    #     all_w0 += w0
-    #     all_w1 += w1
-    #
-    # print(all_w0, all_w1)
+    u0 = Unit(
+        single_unit=SingleUnit(
+            name="u0",
+            attacks=5,
+            wounds=6,
+            toughness=6,
+            strength=5,
+            base_width=0,
+            initiative=1,
+            leadership=0,
+            base_height=0,
+            ward=7,
+            armor=7,
+            weapon_skill=4,
+            ballistic_skill=0,
+            regen=7,
+        ),
+        fighters=1
+    )
+
+    u1 = Unit(
+        single_unit=SingleUnit(
+            name="u1",
+            attacks=5,
+            wounds=4,
+            toughness=4,
+            strength=5,
+            base_width=0,
+            initiative=5,
+            leadership=0,
+            base_height=0,
+            ward=7,
+            armor=7,
+            weapon_skill=7,
+            ballistic_skill=0,
+            regen=7,
+        ),
+        fighters=1
+    )
+
+    all_w0 = 0
+    all_w1 = 0
+
+    N = 1
+
+    for _ in range(N):
+        w0, w1 = close_combat_round(u0, u1)
+        all_w0 += w0
+        all_w1 += w1
+
+    print(all_w0/N, all_w1/N)
