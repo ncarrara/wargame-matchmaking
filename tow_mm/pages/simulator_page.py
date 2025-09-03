@@ -57,6 +57,7 @@ ALL_UNITS = {u.name: u for u in read_json()}
 
 def display_simulator_page():
     st.title("Combat Simulator")
+    st.markdown("⚠️ it is an alpha, subject to bug. Only for single wound profiles.")
 
     units = {}
 
