@@ -1,5 +1,5 @@
 import dataclasses
-import random
+
 import numpy as np
 
 TO_HIT_CHART = [
@@ -30,6 +30,8 @@ TO_WOUND_CHART = [
 ]
 
 
+
+
 @dataclasses.dataclass
 class SingleUnit:
     name: str
@@ -46,6 +48,8 @@ class SingleUnit:
     ward: int = 7
     armor: int = 7
     regen: int = 7
+
+
 
 
 @dataclasses.dataclass
@@ -101,52 +105,54 @@ def close_combat_round(u0: Unit, u1: Unit):
 
 if __name__ == "__main__":
 
-    u0 = Unit(
-        single_unit=SingleUnit(
-            name="u0",
-            attacks=2,
-            wounds=1,
-            toughness=4,
-            strength=3,
-            base_width=0,
-            initiative=4,
-            leadership=0,
-            base_height=0,
-            ward=7,
-            armor=5,
-            weapon_skill=3,
-            ballistic_skill=3,
-            regen=7,
-        ),
-        fighters=10
-    )
+    print(read_json())
 
-    u1 = Unit(
-        single_unit=SingleUnit(
-            name="u1",
-            attacks=2,
-            wounds=1,
-            toughness=4,
-            strength=3,
-            base_width=0,
-            initiative=5,
-            leadership=0,
-            base_height=0,
-            ward=7,
-            armor=5,
-            weapon_skill=3,
-            ballistic_skill=3,
-            regen=7,
-        ),
-        fighters=10
-    )
-
-    all_w0 = 0
-    all_w1 = 0
-
-    for _ in range(1000):
-        w0, w1 = close_combat_round(u0, u1)
-        all_w0 += w0
-        all_w1 += w1
-
-    print(all_w0, all_w1)
+    # u0 = Unit(
+    #     single_unit=SingleUnit(
+    #         name="u0",
+    #         attacks=2,
+    #         wounds=1,
+    #         toughness=4,
+    #         strength=3,
+    #         base_width=0,
+    #         initiative=4,
+    #         leadership=0,
+    #         base_height=0,
+    #         ward=7,
+    #         armor=5,
+    #         weapon_skill=3,
+    #         ballistic_skill=3,
+    #         regen=7,
+    #     ),
+    #     fighters=10
+    # )
+    #
+    # u1 = Unit(
+    #     single_unit=SingleUnit(
+    #         name="u1",
+    #         attacks=2,
+    #         wounds=1,
+    #         toughness=4,
+    #         strength=3,
+    #         base_width=0,
+    #         initiative=5,
+    #         leadership=0,
+    #         base_height=0,
+    #         ward=7,
+    #         armor=5,
+    #         weapon_skill=3,
+    #         ballistic_skill=3,
+    #         regen=7,
+    #     ),
+    #     fighters=10
+    # )
+    #
+    # all_w0 = 0
+    # all_w1 = 0
+    #
+    # for _ in range(1000):
+    #     w0, w1 = close_combat_round(u0, u1)
+    #     all_w0 += w0
+    #     all_w1 += w1
+    #
+    # print(all_w0, all_w1)
