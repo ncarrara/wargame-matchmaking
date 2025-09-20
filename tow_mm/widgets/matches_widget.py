@@ -1,6 +1,6 @@
 from collections.abc import Callable
 from typing import List
-
+from datetime import datetime
 import streamlit as st
 
 from tow_mm.data_model import Match, Venue, Player
@@ -39,9 +39,12 @@ def display_matches_widget(venues: List[Venue], players: List[Player], match_fil
         # Create a card for each match
         with st.container(border=True):
             col1, col2,col3 = st.columns([1,1,1])
+            # format to human readable
+            dt_str = match.created_at.strftime("%a, %b %d %Y at %I:%M %p")
             with col1:
                 st.markdown(f"### Match {match_id} {'(Ranked)' if match.ranked else ''}")
             with col2:
+                st.markdown(f"{dt_str}")
                 st.markdown(f"**State:** {match.state}")
                 st.markdown(f"**Venue:** {venue_name}")
                 st.markdown(f"**Fight:** {p0_str} ⚔️ {p1_str}")
