@@ -8,6 +8,8 @@ services:
     ports:
       - "8000:8000"  # Flask
       - "3000:3000"  # Streamlit
+    volumes:
+      - uploads_data:/app/uploads
   db:
     image: postgres:13.22-trixie
     restart: always
@@ -23,3 +25,4 @@ services:
 
 volumes:
   data_sql:
+  uploads_data:
