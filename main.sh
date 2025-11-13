@@ -1,6 +1,3 @@
-#poetry run streamlit run app.py
-
-
 #!/bin/bash
 set -e
 
