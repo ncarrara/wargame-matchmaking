@@ -1,3 +1,5 @@
+from typing import Optional
+
 import streamlit as st
 
 
@@ -29,6 +31,14 @@ def nav_to_simulator_page():
 def nav_to_ranking_page(top: int):
     st.query_params.clear()
     st.query_params["ranking"] = top
+    st.rerun()
+
+def nav_to_battle_report_page(report_id: Optional[int]):
+    st.query_params.clear()
+    st.query_params["page"] = "report"
+
+    if report_id is not None:
+        st.query_params["id"] = report_id
     st.rerun()
 
 

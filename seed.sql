@@ -2,13 +2,15 @@
 
 \c warhammer;
 --
---DROP TABLE IF EXISTS match_participants CASCADE;
---DROP TABLE IF EXISTS matches CASCADE;
---DROP TABLE IF EXISTS venues CASCADE;
---DROP TABLE IF EXISTS factions CASCADE;
---DROP TABLE IF EXISTS players CASCADE;
---DROP TABLE IF EXISTS chat_messages CASCADE;
---DROP TABLE IF EXISTS contact_messages CASCADE;
+DROP TABLE IF EXISTS match_participants CASCADE;
+DROP TABLE IF EXISTS matches CASCADE;
+DROP TABLE IF EXISTS venues CASCADE;
+DROP TABLE IF EXISTS factions CASCADE;
+DROP TABLE IF EXISTS players CASCADE;
+DROP TABLE IF EXISTS chat_messages CASCADE;
+DROP TABLE IF EXISTS contact_messages CASCADE;
+DROP TABLE IF EXISTS battle_reports CASCADE;
+
 
 CREATE TABLE IF NOT EXISTS players (
     id SERIAL PRIMARY KEY,
@@ -17,6 +19,17 @@ CREATE TABLE IF NOT EXISTS players (
     email VARCHAR(100) UNIQUE NOT NULL,
     mmr INTEGER NOT NULL DEFAULT 2000,
     games_number INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS battle_reports (
+    id SERIAL PRIMARY KEY,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by INTEGER NOT NULL,
+
+    CONSTRAINT fk_created_by FOREIGN KEY (created_by)
+        REFERENCES players(id) ON DELETE CASCADE
+
 );
 
 CREATE TABLE IF NOT EXISTS contact_messages (
@@ -168,3 +181,8 @@ INSERT INTO venues (id, name, address) VALUES ('33','vert saint denis', ' 77');
 INSERT INTO venues (id, name, address) VALUES ('34','gw paris 12', '75');
 INSERT INTO venues (id, name, address) VALUES ('35','rathelot', '');
 INSERT INTO venues (id, name, address) VALUES ('36','montigny le bretonneux', '78');
+
+--INSERT INTO battle_reports (content, created_by)
+--VALUES (
+--    '# Battle of Averland\nEmpire vs Orcs & Goblins — Empire Victory (6 turns)...', 0
+--);

@@ -90,3 +90,10 @@ class Venue:
     name: str
     address: str
     id: Optional[int]
+
+
+@dataclass
+class BattleReport:
+    id: Optional[int]
+    content: str
+    created_by: int

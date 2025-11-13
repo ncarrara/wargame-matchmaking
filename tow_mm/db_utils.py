@@ -9,7 +9,7 @@ import streamlit as st
 from dotenv import load_dotenv
 
 from tow_mm.data_model import Player, Match, Faction, MatchParticipation, MatchResult, Venue, ChatMessage, \
-    ContactMessage
+    ContactMessage, BattleReport
 
 load_dotenv()
 
@@ -22,6 +22,7 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 
 class CloseException(Exception):
     pass
+
 
 def build_cursor():
     cur = conn.cursor()
@@ -51,6 +52,27 @@ def get_player(player_id: int) -> Player:
     return get_players(player_ids=[player_id])[0]
 
 
+def get_battle_reports(report_ids: Optional[List[int]] = None) -> List[BattleReport]:
+    cur = build_cursor()
+    if report_ids:
+        query = """
+                SELECT id, content, created_by
+                FROM battle_reports
+                WHERE id in %s
+            """
+        cur.execute(query, (tuple(report_ids),))
+    else:
+        query = """
+                SELECT id, content, created_by
+                FROM battle_reports
+            """
+        cur.execute(query)
+
+    rows = cur.fetchall()
+    cur.close()
+    return [BattleReport(id=row[0], content=row[1], created_by=row[2]) for row in rows]
+
+
 def get_players(player_ids: Optional[List[int]] = None) -> List[Player]:
     cur = build_cursor()
     if player_ids:
@@ -69,7 +91,8 @@ def get_players(player_ids: Optional[List[int]] = None) -> List[Player]:
 
     rows = cur.fetchall()
     cur.close()
-    return [Player(name=row[0], email=row[1], mmr=row[2], id=row[3], games_number=row[4], pseudo=row[5]) for row in rows]
+    return [Player(name=row[0], email=row[1], mmr=row[2], id=row[3], games_number=row[4], pseudo=row[5]) for row in
+            rows]
 
 
 def get_messages(match_id: int, player_id: int, destination_player_id: int) -> List[ChatMessage]:
@@ -79,7 +102,7 @@ def get_messages(match_id: int, player_id: int, destination_player_id: int) -> L
         FROM chat_messages
         WHERE match_id = %s AND ((player_id = %s AND destination_player_id = %s) OR (player_id = %s AND destination_player_id = %s))
         ORDER BY created_at ASC
-    """, (match_id, player_id, destination_player_id,destination_player_id,player_id))
+    """, (match_id, player_id, destination_player_id, destination_player_id, player_id))
 
     rows = cur.fetchall()
     cur.close()
@@ -94,6 +117,7 @@ def get_messages(match_id: int, player_id: int, destination_player_id: int) -> L
         )
         for r in rows
     ]
+
 
 def get_contact_messages() -> List[ContactMessage]:
     cur = build_cursor()
@@ -115,6 +139,7 @@ def get_contact_messages() -> List[ContactMessage]:
         for r in rows
     ]
 
+
 def add_chat_message(message: ChatMessage):
     cur = build_cursor()
     cur.execute(
@@ -127,6 +152,19 @@ def add_chat_message(message: ChatMessage):
     return message_id
 
 
+def add_battle_report(bp: BattleReport):
+    cur = build_cursor()
+    print(bp.content)
+    cur.execute(
+        "INSERT INTO battle_reports (content, created_by) VALUES (%s, %s) RETURNING id",
+        (bp.content, bp.created_by)
+    )
+    bp_id = cur.fetchone()[0]
+    conn.commit()
+    cur.close()
+    return bp_id
+
+
 def add_contact_message(message: ContactMessage):
     cur = build_cursor()
     cur.execute(
@@ -137,6 +175,7 @@ def add_contact_message(message: ContactMessage):
     conn.commit()
     cur.close()
     return message_id
+
 
 def add_match(created_by: Player, match_datetime: datetime, venue_id: int, ranked: bool):
     cur = build_cursor()
@@ -159,7 +198,7 @@ def update_match(match_id: int):
         cur = conn.cursor()
 
         if match.is_open():
-            match_can_start = len(parts) ==2 and all([part.is_ready for part in parts])
+            match_can_start = len(parts) == 2 and all([part.is_ready for part in parts])
 
             if match_can_start:
                 cur.execute(
@@ -188,8 +227,10 @@ def update_match(match_id: int):
                 delta_p0 = delta[parts[0].result]
                 delta_p1 = delta[parts[1].result]
 
-                d0 = {"mmr_before": p0.mmr, "mmr_after": p0.mmr + delta_p0, "player_id": p0.id, "games_number": p0.games_number+1}
-                d1 = {"mmr_before": p1.mmr, "mmr_after": p1.mmr + delta_p1, "player_id": p1.id, "games_number": p1.games_number+1}
+                d0 = {"mmr_before": p0.mmr, "mmr_after": p0.mmr + delta_p0, "player_id": p0.id,
+                      "games_number": p0.games_number + 1}
+                d1 = {"mmr_before": p1.mmr, "mmr_after": p1.mmr + delta_p1, "player_id": p1.id,
+                      "games_number": p1.games_number + 1}
                 for d in [d0, d1]:
                     cur.execute(
                         query="UPDATE match_participants SET mmr_before = %s, mmr_after = %s WHERE match_id = %s AND player_id = %s",
@@ -267,13 +308,13 @@ def get_venues() -> List[Venue]:
 
 
 def get_match(match_id: int) -> Match:
-
-    matches =  get_matches([match_id])
+    matches = get_matches([match_id])
 
     if matches:
         return matches[0]
     else:
         return None
+
 
 def change_pseudo(player_id: int, pseudo: str):
     cur = build_cursor()
@@ -282,6 +323,7 @@ def change_pseudo(player_id: int, pseudo: str):
         query="UPDATE players SET pseudo = %s WHERE id = %s",
         vars=(pseudo, player_id)
     )
+
 
 def get_matches(match_ids: Optional[List[int]] = None) -> List[Match]:
     cur = build_cursor()
@@ -370,6 +412,7 @@ def get_match_participations(match_id: int) -> List[MatchParticipation]:
     )
         for r in rows
     ]
+
 
 def get_matches_with_participations(match_ids: Optional[List[int]] = None):
     """

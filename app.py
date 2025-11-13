@@ -8,7 +8,9 @@ from streamlit_autorefresh import st_autorefresh
 
 from tow_mm.config import Config
 from tow_mm.db_utils import get_players, get_factions, get_venues
+from tow_mm.pages.battle_report_page import display_battle_report
 from tow_mm.pages.contact_page import display_contact_page
+from tow_mm.pages.create_bp_page import display_create_battle_report
 from tow_mm.pages.main_lobby import display_main_lobby_page
 from tow_mm.pages.match_lobby import display_match_lobby_page
 from tow_mm.pages.profile_page import display_profile_page
@@ -17,6 +19,7 @@ from tow_mm.pages.simulator_page import display_simulator_page
 from tow_mm.widgets.head_widget import display_header
 
 load_dotenv()
+
 
 handler = colorlog.StreamHandler()
 handler.setFormatter(colorlog.ColoredFormatter(
@@ -36,8 +39,11 @@ st.markdown("""
 st.session_state.config = Config(app_url=os.getenv("APP_URL", None))
 
 simulation = st.query_params and "page" in st.query_params and st.query_params["page"] == "simulator"
+battle_report = st.query_params and "page" in st.query_params and st.query_params["page"] == "report"
+create_battle_report = st.query_params and "page" in st.query_params and st.query_params["page"] == "create_battle_report"
 
-autorefresh= not simulation
+# autorefresh= not simulation
+autorefresh= False
 
 if autorefresh:
     interval = 3000
@@ -77,6 +83,10 @@ elif st.query_params and "page" in st.query_params and st.query_params["page"] =
     display_contact_page(player=player)
 elif simulation:
     display_simulator_page()
+elif battle_report:
+    display_battle_report(report_id=int(st.query_params.id) if "id" in st.query_params else None)
+elif create_battle_report:
+    display_create_battle_report(player=player)
 else:
     display_main_lobby_page(players=players, venues=venues)
 
