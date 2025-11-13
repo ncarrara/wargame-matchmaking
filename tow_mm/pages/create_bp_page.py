@@ -143,7 +143,7 @@ def update_key():
     st.session_state.uploader_key += 1
 
 def display_create_battle_report(player: Player):
-    st.set_option('server.maxUploadSize', 2)
+    # st.set_option('server.maxUploadSize', 2)
     print("=====================================================")
     print("======================================================")
     print("========== display_create_battle_report ==============")

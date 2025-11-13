@@ -3,6 +3,8 @@ hideTopBar = true
 [theme]
 base = "light"
 
+[server]
+maxUploadSize=5
 ## Anthropic-inspired palette
 #primaryColor = "#8A63D2"            # Soft purple accent
 #backgroundColor = "#FFFFFF"         # Clean white background
