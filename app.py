@@ -42,15 +42,14 @@ simulation = st.query_params and "page" in st.query_params and st.query_params["
 battle_report = st.query_params and "page" in st.query_params and st.query_params["page"] == "report"
 create_battle_report = st.query_params and "page" in st.query_params and st.query_params["page"] == "create_battle_report"
 
-# autorefresh= not simulation
-autorefresh= False
+autorefresh= not simulation
 
 if autorefresh:
     interval = 3000
 else:
     interval =  500_000
 
-st_autorefresh(interval=interval)
+# st_autorefresh(interval=interval)
 
 st.set_page_config(page_title="WMM", page_icon="static/logos/transparent_green.png")
 
