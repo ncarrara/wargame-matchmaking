@@ -181,7 +181,8 @@ def display_create_battle_report(player: Player):
         "Upload images (PNG, JPG, JPEG)",
         type=["png", "jpg", "jpeg"],
         accept_multiple_files=False,
-        key = f"uploader_{st.session_state.uploader_key}"
+        key = f"uploader_{st.session_state.uploader_key}",
+
     )
 
     if uploaded_file:
