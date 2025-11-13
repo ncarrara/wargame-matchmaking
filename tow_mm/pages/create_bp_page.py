@@ -148,7 +148,7 @@ def display_create_battle_report(player: Player):
     print("========== display_create_battle_report ==============")
     print("==================================================")
     print("=====================================================")
-    st.set_page_config(layout="wide")
+    # st.set_page_config(layout="wide")
     # Ensure the upload directory exists
     tmp_dir = Path("uploads") / str(player.id) / ".tmp"
     tmp_dir.mkdir(exist_ok=True, parents=True)

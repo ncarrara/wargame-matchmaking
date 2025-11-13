@@ -2,8 +2,7 @@ from typing import Optional
 
 import streamlit as st
 
-from tow_mm.data_model import BattleReport
-from tow_mm.db_utils import get_battle_reports, add_battle_report
+from tow_mm.db_utils import get_battle_reports
 from tow_mm.navigation_utils import nav_to_battle_report_page, nav_to_page
 
 

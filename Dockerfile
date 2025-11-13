@@ -18,4 +18,5 @@ EXPOSE 80
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
-ENTRYPOINT ["poetry", "run","streamlit", "run", "app.py", "--server.port=3000", "--server.address=0.0.0.0"]
+# ENTRYPOINT ["poetry", "run","streamlit", "run", "app.py", "--server.port=3000", "--server.address=0.0.0.0"]
+ENTRYPOINT ["./main.sh"]
