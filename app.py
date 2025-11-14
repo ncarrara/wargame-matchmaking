@@ -36,7 +36,7 @@ st.markdown("""
         """, unsafe_allow_html=True)
 
 
-st.session_state.config = Config(app_url=os.getenv("APP_URL", None))
+st.session_state.config = Config(app_url=os.getenv("APP_URL", None), uploads_url=os.getenv("UPLOADS_URL", None))
 
 simulation = st.query_params and "page" in st.query_params and st.query_params["page"] == "simulator"
 battle_report = st.query_params and "page" in st.query_params and st.query_params["page"] == "report"
@@ -83,7 +83,7 @@ elif st.query_params and "page" in st.query_params and st.query_params["page"] =
 elif simulation:
     display_simulator_page()
 elif battle_report:
-    display_battle_report(report_id=int(st.query_params.id) if "id" in st.query_params else None)
+    display_battle_report(report_id=int(st.query_params.id) if "id" in st.query_params else None, players=players_by_id)
 elif create_battle_report:
     display_create_battle_report(player=player)
 else:

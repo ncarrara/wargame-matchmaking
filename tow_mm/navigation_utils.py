@@ -43,6 +43,6 @@ def nav_to_battle_report_page(report_id: Optional[int]):
 
 
 def nav_to_main_lobby_button():
-    if st.button("Main lobby"):
+    if st.button("Lobby"):
         st.query_params.clear()
         st.rerun()

@@ -9,9 +9,10 @@ from tow_mm.navigation_utils import nav_to_main_lobby_button, nav_to_player_id_p
     nav_to_contact_page, nav_to_simulator_page, nav_to_battle_report_page
 
 
-def display_header()-> Optional[Player]:
+def display_header() -> Optional[Player]:
+    col1, _, col2 = st.columns([4, 1, 1])
 
-    col1, _, col2 = st.columns([4,1, 1])
+    cols = st.columns([1, 1, 1, 1, 1, 1, 1])
 
     with col1:
         st.image("static/logos/banner.png")
@@ -21,12 +22,20 @@ def display_header()-> Optional[Player]:
     screen_width = streamlit_js_eval(js_expressions='screen.width', key='SCR')
     on_mobile = screen_width is not None and screen_width < 500
 
-    with col2:
+    with col2 if on_mobile else nullcontext():
         with st.expander(label="🍔 Menu") if on_mobile else nullcontext():
-            nav_to_main_lobby_button()
+            i = 0
+            with cols[i] if not on_mobile else nullcontext():
+                nav_to_main_lobby_button()
+            i+=1
+
             if not st.user.is_logged_in:
-                if st.button("Log in", type="primary", icon=":material/login:", width=100):
-                    st.login("google")
+                with cols[i] if not on_mobile else nullcontext():
+
+                    # if st.button("Log in", type="primary", icon=":material/login:", width=100):
+                    if st.button("Log in", type="primary", width=100):
+                        st.login("google")
+                i += 1
             else:
 
                 player = insert_or_get_player(
@@ -39,20 +48,27 @@ def display_header()-> Optional[Player]:
                         pseudo=None
                     )
                 )
+                with cols[i] if not on_mobile else nullcontext():
 
-                if st.button(f"Log out ({st.user.given_name})", width=100):
-                    st.logout()
-
-                if st.button("Profile", key=f"nav_to_profile_button", width=100):
-                    nav_to_player_id_page(player_id=player.id)
-
-            if st.button("Contact", key=f"nav_to_contact_button", width=100):
-                nav_to_contact_page()
-
-            if st.button("Simulator", key=f"nav_to_simulator_button", width=100):
-                nav_to_simulator_page()
-
-            if st.button("Battle Reports", key=f"nav_to_battle_report_button", width=100):
-                nav_to_battle_report_page(report_id= None)
+                    # if st.button(f"Log out ({st.user.given_name})", width=100):
+                    if st.button(f"Log out", width=100):
+                        st.logout()
+                i += 1
+                with cols[i] if not on_mobile else nullcontext():
+                    if st.button("Profile", key=f"nav_to_profile_button", width=100):
+                        nav_to_player_id_page(player_id=player.id)
+                i += 1
+            with cols[i] if not on_mobile else nullcontext():
+                if st.button("Contact", key=f"nav_to_contact_button", width=100):
+                    nav_to_contact_page()
+            i += 1
+            with cols[i] if not on_mobile else nullcontext():
+                if st.button("Sim", key=f"nav_to_simulator_button", width=100):
+                    nav_to_simulator_page()
+            i += 1
+            with cols[i] if not on_mobile else nullcontext():
+                if st.button("Reports", key=f"nav_to_battle_report_button", width=100):
+                    nav_to_battle_report_page(report_id=None)
+            i += 1
 
     return player
