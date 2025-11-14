@@ -17,4 +17,6 @@ def serve_file(filename):
     return send_from_directory(FOLDER_TO_SERVE, filename)
 
 if __name__ == '__main__':
+    print("[upload server] running ...")
     app.run(debug=True, host='0.0.0.0', port=8000)
+    print("[upload server] running ... done")
