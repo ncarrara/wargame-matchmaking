@@ -1,4 +1,3 @@
-from contextlib import nullcontext
 from typing import Optional, Dict
 
 import streamlit as st
@@ -6,12 +5,9 @@ import streamlit as st
 from tow_mm.data_model import Player
 from tow_mm.db_utils import get_battle_reports
 from tow_mm.navigation_utils import nav_to_battle_report_page, nav_to_page
-from tow_mm.utils import draw_line
 
 
 def display_battle_report(report_id: Optional[int], players: Dict[int, Player]):
-
-    draw_line(margin=2)
 
     if report_id is not None:
             if st.button("All battle reports", key="all_reports"):

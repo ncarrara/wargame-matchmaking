@@ -31,7 +31,6 @@ def display_header() -> Optional[Player]:
 
             if not st.user.is_logged_in:
                 with cols[i] if not on_mobile else nullcontext():
-
                     # if st.button("Log in", type="primary", icon=":material/login:", width=100):
                     if st.button("Log in", type="primary", width=100):
                         st.login("google")

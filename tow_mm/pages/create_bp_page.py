@@ -9,7 +9,6 @@ import streamlit as st
 from tow_mm.data_model import BattleReport, Player
 from tow_mm.db_utils import add_battle_report
 from tow_mm.navigation_utils import nav_to_battle_report_page
-from tow_mm.utils import draw_line
 
 DEFAULT_MD = """
 
@@ -61,7 +60,6 @@ Deployed with artillery on the hill, infantry in the centre, and knights on the 
 **Orcs & Goblins:**  
 Orc Boyz opposite the Halberdiers, Night Goblins on the left, Giant near the centre to threaten the line.
 
-
 ---
 
 ## ⚔️ Turn-by-Turn Summary
@@ -76,24 +74,6 @@ Orc Boyz opposite the Halberdiers, Night Goblins on the left, Giant near the cen
 - Fanatics released! One kills 5 Halberdiers.  
 - Giant moves up aggressively.  
 - Rock Lobber misses the Steam Tank.
-
----
-
-### **Turn 2**
-**Empire:**  
-- Knights charge Boar Boyz and win combat by 2 — Orcs hold.  
-- Steam Tank crushes 6 Orc Boyz with impact hits.  
-
-**Orcs & Goblins:**  
-- Giant charges Halberdiers; causes Terror test — they hold!  
-- Shaman miscasts *Foot of Gork*, taking a wound.  
-
----
-
-### **Turn 3–4**
-- Empire artillery finally hits, killing the Giant.  
-- Orc morale begins to crumble after their general is slain by the Griffon.  
-- Steam Tank holds the center while Knights sweep the flank.
 
 ---
 
@@ -121,23 +101,6 @@ Orc Boyz opposite the Halberdiers, Night Goblins on the left, Giant near the cen
 - Keep artillery protected from Fanatics.
 - Giants are unreliable — but terrifying while they last.
 - Synergy between Wizard buffs and Steam Tank was devastating.
-
----
-
-## 📸 Gallery
-
-| Turn | Description | Image |
-|------|--------------|-------|
-| 1 | Deployment phase overview | ![deployment](deployment.jpg) |
-| 3 | Griffon charges Giant | ![charge](griffon-vs-giant.jpg) |
-| 6 | Endgame overview | ![endgame](battle-end.jpg) |
-
----
-
-*Recorded by:* **Marcus the Chronicler**  
-*Campaign:* *Defenders of the Reik, Game 3/10*
-
-
 
 """
 
