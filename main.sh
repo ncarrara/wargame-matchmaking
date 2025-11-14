@@ -3,7 +3,7 @@ set -e
 
 # Start Flask in background
 echo "Starting Flask..."
-poetry run python app.py &
+poetry run python upload_server.py &
 
 # Start Streamlit in background
 echo "Starting Streamlit..."
