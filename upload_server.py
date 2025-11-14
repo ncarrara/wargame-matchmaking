@@ -8,7 +8,7 @@ FOLDER_TO_SERVE = os.path.join(os.getcwd(), 'uploads')
 
 @app.route('/')
 def index():
-    return "Welcome! Go to /files/<filename> to access files."
+    return "Welcome! Go to /uploads/<path:filename> to access files."
 
 @app.route('/uploads/<path:filename>')
 def serve_file(filename):
