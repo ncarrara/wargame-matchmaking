@@ -35,8 +35,13 @@ def display_com_faq(entry_id: Optional[int] = None):
 
     st.title("Community FAQ")
 
-    # --- Sidebar Filters ---
+    st.sidebar.image("static/logos/banner.png")
+
+    if st.sidebar.button("Home"):
+        nav_to_page("Lobby")
+
     st.sidebar.header("Filters")
+
 
     search_text = st.sidebar.text_input("Enter search term:")
 

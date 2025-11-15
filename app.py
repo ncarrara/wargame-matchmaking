@@ -55,7 +55,7 @@ else:
 
 
 if not com_faq:
-    st.set_page_config(page_title="WMM", page_icon="static/logos/transparent_green.png")
+    st.set_page_config(page_title="WMM", page_icon="static/logos/transparent_green.png", layout="centered")
     player = display_header()
 else:
     st.set_page_config(page_title="WMM", page_icon="static/logos/transparent_green.png", layout="wide")
