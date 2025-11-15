@@ -9,6 +9,7 @@ from streamlit_autorefresh import st_autorefresh
 from tow_mm.config import Config
 from tow_mm.db_utils import get_players, get_factions, get_venues
 from tow_mm.pages.battle_report_page import display_battle_report
+from tow_mm.pages.comfaq import display_com_faq
 from tow_mm.pages.contact_page import display_contact_page
 from tow_mm.pages.create_bp_page import display_create_battle_report
 from tow_mm.pages.main_lobby import display_main_lobby_page
@@ -41,6 +42,7 @@ st.session_state.config = Config(app_url=os.getenv("APP_URL", None), uploads_url
 simulation = st.query_params and "page" in st.query_params and st.query_params["page"] == "simulator"
 battle_report = st.query_params and "page" in st.query_params and st.query_params["page"] == "report"
 create_battle_report = st.query_params and "page" in st.query_params and st.query_params["page"] == "create_battle_report"
+com_faq = st.query_params and "page" in st.query_params and st.query_params["page"] == "com_faq"
 
 autorefresh= not simulation
 
@@ -51,9 +53,13 @@ else:
 
 # st_autorefresh(interval=interval)
 
-st.set_page_config(page_title="WMM", page_icon="static/logos/transparent_green.png")
 
-player = display_header()
+if not com_faq:
+    st.set_page_config(page_title="WMM", page_icon="static/logos/transparent_green.png")
+    player = display_header()
+else:
+    st.set_page_config(page_title="WMM", page_icon="static/logos/transparent_green.png", layout="wide")
+    player= None
 
 st.session_state.player = player
 
@@ -86,6 +92,8 @@ elif battle_report:
     display_battle_report(report_id=int(st.query_params.id) if "id" in st.query_params else None, players=players_by_id)
 elif create_battle_report:
     display_create_battle_report(player=player)
+elif com_faq:
+    display_com_faq()
 else:
     display_main_lobby_page(players=players, venues=venues)
 

@@ -14,6 +14,7 @@ class ChatMessage:
     match_id: int
     id: Optional[int]
 
+
 @dataclass
 class ContactMessage:
     id: Optional[int]

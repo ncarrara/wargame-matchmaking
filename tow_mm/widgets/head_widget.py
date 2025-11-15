@@ -6,7 +6,7 @@ from streamlit_js_eval import streamlit_js_eval
 
 from tow_mm.db_utils import Player, insert_or_get_player
 from tow_mm.navigation_utils import nav_to_main_lobby_button, nav_to_player_id_page, nav_to_ranking_page, \
-    nav_to_contact_page, nav_to_simulator_page, nav_to_battle_report_page
+    nav_to_contact_page, nav_to_simulator_page, nav_to_battle_report_page, nav_to_page
 
 
 def display_header() -> Optional[Player]:
@@ -68,6 +68,11 @@ def display_header() -> Optional[Player]:
             with cols[i] if not on_mobile else nullcontext():
                 if st.button("Reports", key=f"nav_to_battle_report_button", width=100):
                     nav_to_battle_report_page(report_id=None)
+            i += 1
+
+            with cols[i] if not on_mobile else nullcontext():
+                if st.button("FAQ", key=f"nav_to_com_faq", width=100):
+                    nav_to_page("com_faq")
             i += 1
 
     return player

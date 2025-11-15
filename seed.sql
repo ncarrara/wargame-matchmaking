@@ -11,7 +11,6 @@
 --DROP TABLE IF EXISTS contact_messages CASCADE;
 --DROP TABLE IF EXISTS battle_reports CASCADE;
 
-
 CREATE TABLE IF NOT EXISTS players (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
