@@ -1,8 +1,10 @@
 import pandas as pd
+import streamlit
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 
+@streamlit.cache_resource
 def parse_com_faq() -> pd.DataFrame:
     import pandas as pd
 

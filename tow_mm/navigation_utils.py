@@ -41,6 +41,13 @@ def nav_to_battle_report_page(report_id: Optional[int]):
         st.query_params["id"] = report_id
     st.rerun()
 
+def nav_to_com_faq(report_id: Optional[int]):
+    st.query_params.clear()
+    st.query_params["page"] = "com_faq"
+
+    if report_id is not None:
+        st.query_params["id"] = report_id
+    st.rerun()
 
 def nav_to_main_lobby_button():
     if st.button("Lobby"):

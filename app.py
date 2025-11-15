@@ -93,7 +93,7 @@ elif battle_report:
 elif create_battle_report:
     display_create_battle_report(player=player)
 elif com_faq:
-    display_com_faq()
+    display_com_faq(entry_id=int(st.query_params.id) if "id" in st.query_params else None)
 else:
     display_main_lobby_page(players=players, venues=venues)
 
